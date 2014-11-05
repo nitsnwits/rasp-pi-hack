@@ -26,11 +26,11 @@ url = "http://sugarmtnfarm.com/blog/uploaded_images/FrogTinyFingersDSCF6544-7602
 
 def makeCall(receiver, caller, url):
 	client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-	client.messages.create(
+	call = client.messages.create(
 		to="8476447988", 
 		from_="+12244124335", 
 		body="Look who showed up", 
-		media_url="http://sugarmtnfarm.com/blog/uploaded_images/FrogTinyFingersDSCF6544-760238.jpg"
+		media_url="/tmp/caller.jpg"
 	)
 	return call.sid
 
