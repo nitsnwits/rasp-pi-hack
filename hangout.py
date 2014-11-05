@@ -52,7 +52,7 @@ if __name__ == '__main__':
 				camera.stop_preview()
 			call = makeCall(receiver, caller, body, url)
 			now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-			logFile.write("Made a call at " + str(now) + " to " + str(call))
+			logFile.write("Made a call at " + str(now) + " to " + str(call) + "\n")
 			time.sleep(10) #relax pi for a bit, avoid multiple retries
 
 
