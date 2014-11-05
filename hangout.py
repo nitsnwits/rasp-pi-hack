@@ -5,12 +5,13 @@ import time
 import picamera
 import webbrowser
 from twilio.rest import TwilioRestClient
+from time import gmtime, strftime
 
 #uncomment to start python debugger
 #import pdb
 #pdb.set_trace()
 
-logFile = open('/tmp/rasp-pi.log', 'w')
+logFile = open('/tmp/rasp-pi.log', 'a')
 
 #set up button channel on 18th pin of rasp pi
 GPIO.setmode(GPIO.BCM)
@@ -50,9 +51,9 @@ if __name__ == '__main__':
 				camera.capture('/tmp/caller.jpg')
 				camera.stop_preview()
 			call = makeCall(receiver, caller, body, url)
-			logFile.write(str(call))
+			now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+			logFile.write("Made a call at " + str(now) + " to " + str(call))
 			time.sleep(10) #relax pi for a bit, avoid multiple retries
-
 
 
 # working client call
