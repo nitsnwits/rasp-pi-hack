@@ -23,14 +23,15 @@ AUTH_TOKEN = "26d9170ee5cfb77df65f3f2128a321d2"
 receiver = "+18476447988"
 caller = "+12244124335"
 url = "http://sugarmtnfarm.com/blog/uploaded_images/FrogTinyFingersDSCF6544-760238.jpg"
+body = "Look who showed up"
 
-def makeCall(receiver, caller, url):
+def makeCall(receiver, caller, message, url):
 	client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 	call = client.messages.create(
-		to="8476447988", 
-		from_="+12244124335", 
-		body="Look who showed up", 
-		media_url="/tmp/caller.jpg"
+		to=receiver, 
+		from_=caller, 
+		body=message, 
+		media_url=url
 	)
 	return call.sid
 
@@ -48,7 +49,7 @@ if __name__ == '__main__':
 				time.sleep(1)
 				camera.capture('/tmp/caller.jpg')
 				camera.stop_preview()
-			call = makeCall(receiver, caller, url)
+			call = makeCall(receiver, caller, body, url)
 			logFile.write(str(call))
 			times.sleep(10) #relax pi for a bit, avoid multiple retries
 
