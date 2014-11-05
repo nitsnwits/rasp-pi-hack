@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 import time
 import picamera
 import webbrowser
+import uuid
 from twilio.rest import TwilioRestClient
 from time import gmtime, strftime
 from boto.s3.connection import S3Connection
