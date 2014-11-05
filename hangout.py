@@ -38,12 +38,18 @@ if __name__ == '__main__':
 
 	#start polling the button
 	while True:
-		time.sleep(2) #2 seconds to check for a new detection, reduced cpu usage
+		#time.sleep(2) #2 seconds to check for a new detection, reduced cpu usage
 		input_state = GPIO.input(18)
 		if input_state == False:
 			print "Detected button press. Setting up call."
-			call = makeCall
-			logFile.write(str(call.sid))
+			#click a picture of the caller
+			with picamera.PiCamera() as camera:
+				camera.start_preview()
+				time.sleep(1)
+				camera.capture('/tmp/caller.jpg')
+				camera.stop_preview()
+			call = makeCall(receiver, caller, url)
+			logFile.write(str(call))
 			times.sleep(10) #relax pi for a bit, avoid multiple retries
 
 
