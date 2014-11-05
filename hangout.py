@@ -16,7 +16,7 @@ from boto.s3.connection import Location
 
 #AWS access keys (keep these as secret, only running on pi)
 conn = S3Connection('<aws access key>', '<aws secret key>')
-bucket = conn.create_bucket('pibucket', location=Location.USWest)
+bucket = conn.create_bucket('bellpi', location=Location.USWest)
 
 logFile = open('/tmp/rasp-pi.log', 'a')
 
