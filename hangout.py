@@ -6,10 +6,16 @@ import picamera
 import webbrowser
 from twilio.rest import TwilioRestClient
 from time import gmtime, strftime
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
 
 #uncomment to start python debugger
 #import pdb
 #pdb.set_trace()
+
+#AWS access keys (keep these as secret, only running on pi)
+conn = S3Connection('<aws access key>', '<aws secret key>')
+bucket = conn.create_bucket('pibucket', location=Location.USWest)
 
 logFile = open('/tmp/rasp-pi.log', 'a')
 
@@ -23,8 +29,11 @@ AUTH_TOKEN = "26d9170ee5cfb77df65f3f2128a321d2"
 
 receiver = "+18476447988"
 caller = "+12244124335"
-url = "http://sugarmtnfarm.com/blog/uploaded_images/FrogTinyFingersDSCF6544-760238.jpg"
+url = "http://sugarmtnfarm.com/blog/uploaded_images/FrogTinyFingersDSCF6544-760238.jpg" #this will be taken as default
 body = "Look who showed up"
+
+def generateUUID():
+    return str(uuid.uuid4());
 
 def makeCall(receiver, caller, message, url):
 	client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
@@ -50,6 +59,13 @@ if __name__ == '__main__':
 				time.sleep(1)
 				camera.capture('/tmp/caller.jpg')
 				camera.stop_preview()
+			#upload  picture to s3 and set the caller url
+			photo = Key(bucket)
+			photo.key = generateUUID()
+			photo.set_contents_from_filename('/tmp/caller.jpg')
+			url = photo.generate_url(expires_in=300)
+
+			#make the call to caller and log the call
 			call = makeCall(receiver, caller, body, url)
 			now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 			logFile.write("Made a call at " + str(now) + " to " + str(call) + "\n")
