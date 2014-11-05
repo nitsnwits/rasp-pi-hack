@@ -26,8 +26,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 #twilio client parameters
-ACCOUNT_SID = "ACfd2e91815e26d4c1c74ba6d98dd76feb" 
-AUTH_TOKEN = "26d9170ee5cfb77df65f3f2128a321d2" 
+ACCOUNT_SID = "xyz" 
+AUTH_TOKEN = "abc" 
 
 receiver = "+18476447988"
 caller = "+12244124335"
