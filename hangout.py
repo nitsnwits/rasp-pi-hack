@@ -51,7 +51,7 @@ if __name__ == '__main__':
 				camera.stop_preview()
 			call = makeCall(receiver, caller, body, url)
 			logFile.write(str(call))
-			times.sleep(10) #relax pi for a bit, avoid multiple retries
+			time.sleep(10) #relax pi for a bit, avoid multiple retries
 
 
 
